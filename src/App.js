@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 
@@ -14,8 +13,13 @@ export default App;
 
 function addDays(date, days) {
   const res = new Date(date);
-  res.setDate(res.getDate() + days);
+  if (days) res.setDate(res.getDate() + days);
   return res;
+}
+
+function isIntegerString(str) {
+  const n = Number(str);
+  return Number.isInteger(n);
 }
 
 function Slider({ step, onStepChange }) {
@@ -48,8 +52,15 @@ function Counter() {
         <Slider step={step} onStepChange={setStep} /> <span> {step} </span>
       </div>
       <div>
-        <button onClick={() => setCount((c) => c - step)}>-</button>Count:
-        {count}
+        <button onClick={() => setCount((c) => c - step)}>-</button>
+        <input
+          type="text"
+          value={count}
+          onChange={(e) => {
+            if (isIntegerString(e.target.value)) setCount(+e.target.value);
+            else setCount(null);
+          }}
+        ></input>
         <button onClick={() => setCount((c) => c + step)}>+</button>
       </div>
       <p>Today is {addDays(currDate, count).toDateString()}</p>
