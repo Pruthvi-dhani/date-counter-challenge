@@ -18,22 +18,34 @@ function addDays(date, days) {
   return res;
 }
 
+function Slider({ step, onStepChange }) {
+  return (
+    <input
+      type="range"
+      min={0}
+      max={10}
+      step={1}
+      value={step}
+      onChange={(e) => onStepChange(+e.target.value)}
+    ></input>
+  );
+}
+
 function Counter() {
   const [step, setStep] = useState(1);
   const [count, setCount] = useState(0);
   const currDate = new Date("2027-06-21");
   return (
     <div>
-      <div>
-        <button
-          onClick={() => {
-            if (step > 1) setStep((s) => s - 1);
-          }}
-        >
-          -
-        </button>
-        Step: {step}
-        <button onClick={() => setStep((s) => s + 1)}>+</button>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          justifyContent: "center",
+        }}
+      >
+        <Slider step={step} onStepChange={setStep} /> <span> {step} </span>
       </div>
       <div>
         <button onClick={() => setCount((c) => c - step)}>-</button>Count:
