@@ -57,13 +57,26 @@ function Counter() {
           type="text"
           value={count}
           onChange={(e) => {
-            if (isIntegerString(e.target.value)) setCount(+e.target.value);
+            if (e.target.value !== "" && isIntegerString(e.target.value))
+              setCount(+e.target.value);
             else setCount(null);
           }}
         ></input>
         <button onClick={() => setCount((c) => c + step)}>+</button>
       </div>
       <p>Today is {addDays(currDate, count).toDateString()}</p>
+      <div>
+        {step === 1 && count === 0 ? null : (
+          <button
+            onClick={() => {
+              setStep(1);
+              setCount(0);
+            }}
+          >
+            Reset
+          </button>
+        )}
+      </div>
     </div>
   );
 }
